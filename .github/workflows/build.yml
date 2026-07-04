@@ -1,0 +1,29 @@
+name: Build Windows App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: تحميل الكود
+        uses: actions/checkout@v3
+
+      - name: إعداد Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: تنزيل المكاتب
+        run: npm install
+
+      - name: بناء ملف الـ EXE
+        run: npm run build
+
+      - name: حفظ ملف الـ EXE النهائي
+        uses: actions/upload-artifact@v3
+        with:
+          name: FlyChickenPOS-App
+          path: dist/*.exe
